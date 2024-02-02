@@ -6,13 +6,25 @@
 // 3. obtener el número más grande y mostrarlo en un <em> pre-creado con el texto "El número más grande es..."
 // 4. obtener el número que más se repite y mostrarlo en un <em> pre-creado con el texto "El número más frecuente es..."
 
-let $numeros = document.querySelectorAll("ol li");
-const listaNumeros = convertirNumerosArray($numeros);
+const tomarNumerosDeLaLista = function () {
+  let $numeros = document.querySelectorAll("ol li");
+  let nuevaLista = [];
+  for (let i = 0; i < $numeros.length; i++) {
+    nuevaLista.push(Number($numeros[i].textContent))
+  }
+  return nuevaLista;
+}
+const numeros = tomarNumerosDeLaLista();
 
-console.log(`El promedio de ${listaNumeros} es de: ${calcularPromedio(listaNumeros)}`);
-//console.log(encontrarNumeroMasChico(listaNumeros));
-console.log(encontrarNumeroMasGrande(listaNumeros));
-console.log(encontrarNumeroMasFrecuente(listaNumeros));
+const promedio = document.querySelector('#promedio');
+const numeroMasChico = document.querySelector('#numero-menor');
+const numeroMasGrande = document.querySelector('#numero-mayor');
+const numeroMasFrecuente = document.querySelector('#numero-frecuente');
+
+promedio.textContent = calcularPromedio(numeros);
+numeroMasChico.textContent = encontrarNumeroMasChico(numeros);
+numeroMasGrande.textContent = encontrarNumeroMasGrande(numeros);
+numeroMasFrecuente.textContent = encontrarNumeroMasFrecuente(numeros);
 
 function encontrarNumeroMasFrecuente(numeros) {
   let numeroMasRepetido = 0;
@@ -24,47 +36,36 @@ function encontrarNumeroMasFrecuente(numeros) {
       if (numeros[i] === numeros[j]) {
         contador++;
       }
-      mayorCantidadEncontradaActual = contador
+      mayorCantidadEncontradaActual = contador;
     }
-    if (mayorCantidadEncontrada < mayorCantidadEncontradaActual) {
-      numeroMasRepetido = numeros[i];
-    }
-    if (mayorCantidadEncontrada === mayorCantidadEncontradaActual) {
+    if (mayorCantidadEncontrada <= mayorCantidadEncontradaActual) {
       numeroMasRepetido = numeros[i];
     }
   }
   return numeroMasRepetido;
 }
 
-
 function encontrarNumeroMasGrande(numeros) {
-  let numeroMasGrandeEncontrado = 0;
+  let numeroMasGrandeEncontrado = numeros[0];
   for (let i = 0; i < numeros.length; i++) {
     let numeroMayorActual = numeros[i];
-    if (numeros[i + 1] > numeroMayorActual) {
-      numeroMasGrandeEncontrado = numeros[i + 1];
+    if (numeroMayorActual > numeroMasGrandeEncontrado) {
+      numeroMasGrandeEncontrado = numeroMayorActual;
     }
   }
   return numeroMasGrandeEncontrado;
 }
 
-
-
-/* 
 function encontrarNumeroMasChico(numeros) {
-  let numeroMenorEncontrado = 0; //[2, 1, 50, 10, 30,]
+  let numeroMasChicoEncontrado = numeros[0];
   for (let i = 0; i < numeros.length; i++) {
-    let numeroMenorActual = 0;
-    let numero = numeros[i]; //1
-    if (numeros[i + 1] > numeroMenorActual) { //50 > 1
-      numeroMenorActual = numero; //1
-    }
-    if (numeroMenorActual < numeroMenorEncontrado) {
-      numeroMenorEncontrado = numeroMenorActual;
+    let numeroMenorActual = numeros[i];
+    if (numeroMenorActual < numeroMasChicoEncontrado) {
+      numeroMasChicoEncontrado = numeroMenorActual;
     }
   }
-  return numeroMenorEncontrado;
-} */
+  return numeroMasChicoEncontrado;
+}
 
 function calcularPromedio(numeros) {
   let sumaNumeros = 0;
@@ -75,15 +76,6 @@ function calcularPromedio(numeros) {
   return sumaNumeros / cantidadNumeros;
 }
 
-
-
-function convertirNumerosArray(numeros) {
-  let nuevaLista = []
-  for (let i = 0; i < numeros.length; i++) {
-    nuevaLista.push(numeros[i].textContent)
-  }
-  return nuevaLista;
-}
 
 
 
