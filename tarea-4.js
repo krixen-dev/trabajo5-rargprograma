@@ -5,26 +5,26 @@
 // 2. obtener el número más pequeño y mostrarlo en un <em> pre-creado con el texto "El número más pequeño es..."
 // 3. obtener el número más grande y mostrarlo en un <em> pre-creado con el texto "El número más grande es..."
 // 4. obtener el número que más se repite y mostrarlo en un <em> pre-creado con el texto "El número más frecuente es..."
-
-const tomarNumerosDeLaLista = function () {
-  let $numeros = document.querySelectorAll("ol li");
-  let nuevaLista = [];
-  for (let i = 0; i < $numeros.length; i++) {
-    nuevaLista.push(Number($numeros[i].textContent))
-  }
-  return nuevaLista;
-}
-const numeros = tomarNumerosDeLaLista();
-
+const $lista = document.querySelectorAll("ol li");
 const promedio = document.querySelector('#promedio');
 const numeroMasChico = document.querySelector('#numero-menor');
 const numeroMasGrande = document.querySelector('#numero-mayor');
 const numeroMasFrecuente = document.querySelector('#numero-frecuente');
 
-promedio.textContent = calcularPromedio(numeros);
-numeroMasChico.textContent = encontrarNumeroMasChico(numeros);
-numeroMasGrande.textContent = encontrarNumeroMasGrande(numeros);
-numeroMasFrecuente.textContent = encontrarNumeroMasFrecuente(numeros);
+const listaDeNumeros = tomarNumerosDeUnaLista($lista);
+
+promedio.textContent = calcularPromedio(listaDeNumeros);
+numeroMasChico.textContent = encontrarNumeroMasChico(listaDeNumeros);
+numeroMasGrande.textContent = encontrarNumeroMasGrande(listaDeNumeros);
+numeroMasFrecuente.textContent = encontrarNumeroMasFrecuente(listaDeNumeros);
+
+function tomarNumerosDeUnaLista ($lista) {
+  let nuevaListaDeNumeros = [];
+  for (const numero of $lista) {
+    nuevaListaDeNumeros.push(Number(numero.textContent));
+  }
+  return nuevaListaDeNumeros;
+}
 
 function encontrarNumeroMasFrecuente(numeros) {
   let numeroMasRepetido = 0;
